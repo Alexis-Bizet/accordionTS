@@ -57,3 +57,5 @@ export const locations: LocationData[] = [
     { id: 49, latitude: 48.8566, longitude: 2.3522, altitude: 35 },
     { id: 50, latitude: 35.6895, longitude: 139.6917, altitude: 131 },
 ];
+
+

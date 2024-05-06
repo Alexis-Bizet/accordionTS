@@ -1,100 +1,74 @@
+import { useEffect, useRef, useState } from 'react';
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Box, AccordionSummary, Accordion, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
+import { Box, AccordionSummary, Accordion, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Typography } from "@mui/material";
 import { locations } from '../data/LocationData';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles(() => ({
+  root: {
+    width: "100%",
+  },
+  rootExpanded: {
+    flexGrow: 1
+  }
+}));
+
+export default function MyAccordion(props) {
+  const classes = useStyles();
+  const { name } = props;
+  const [expanded, setExpanded] = useState(false);
+
+  const rootClass = expanded ? classes.rootExpanded : classes.root;
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
 
-export default function Accordions() {
+
   return (
-    <Box >
-      <Accordion disableGutters={true}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          Aires
-        </AccordionSummary>
-        <AccordionDetails >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
-        </AccordionDetails>
-      </Accordion >
-      <Accordion disableGutters={true}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-        >
-          Volumes
-        </AccordionSummary>
-        <AccordionDetails >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
-        </AccordionDetails>
-      </Accordion >
-      <Accordion disableGutters={true} >
+    <Accordion
+      className={rootClass}
+      expanded={expanded === name}
+      onChange={handleChange(name)}
+      sx={{backgroundColor:'green'}}
+    >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1-content"
-        id="panel1-header"
+        aria-controls="panel1bh-content"
+        id={`${name}-header`}
       >
-        Coordonnées
+        <Typography className={classes.heading}>General settings</Typography>
+        <Typography className={classes.secondaryHeading}>
+          I am an accordion
+        </Typography>
       </AccordionSummary>
-      <AccordionDetails sx={{maxHeight:'70vh', overflow:'auto'}}>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow >
-                <TableCell sx={{fontWeight:"bold"}}>lat</TableCell>
-                <TableCell sx={{fontWeight:"bold"}}>lng</TableCell>
-                <TableCell sx={{fontWeight:"bold"}}>alt</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {locations.map((location, index) => (
-                <TableRow key={index}>
-                  <TableCell>{location.latitude}</TableCell>
-                  <TableCell>{location.longitude}</TableCell>
-                  <TableCell>{location.altitude}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </AccordionDetails>
+      <AccordionDetails style={{ display: 'flex', flexDirection: 'column',}}>
+    <TableContainer style={{ flex: '1 1 auto', overflow: 'auto' }}>
+      <Table stickyHeader >
+        <TableHead >
+          <TableRow >
+            <TableCell>ID</TableCell>
+            <TableCell>Latitude</TableCell>
+            <TableCell>Longitude</TableCell>
+            <TableCell>Altitude</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody >
+          {locations.map((location) => (
+            <TableRow key={location.id}>
+              <TableCell>{location.id}</TableCell>
+              <TableCell>{location.latitude}</TableCell>
+              <TableCell>{location.longitude}</TableCell>
+              <TableCell>{location.altitude}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+</AccordionDetails>
     </Accordion>
-    <Accordion disableGutters={true}>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1-content"
-        id="panel1-header"
-      >
-        Coordonnées
-      </AccordionSummary>
-      <AccordionDetails sx={{maxHeight:'70vh', overflow:'auto'}}>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow >
-                <TableCell sx={{fontWeight:"bold"}}>lat</TableCell>
-                <TableCell sx={{fontWeight:"bold"}}>lng</TableCell>
-                <TableCell sx={{fontWeight:"bold"}}>alt</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {locations.map((location, index) => (
-                <TableRow key={index}>
-                  <TableCell>{location.latitude}</TableCell>
-                  <TableCell>{location.longitude}</TableCell>
-                  <TableCell>{location.altitude}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </AccordionDetails>
-    </Accordion>
-    </Box>
+    
   );
 }
