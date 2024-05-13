@@ -1,15 +1,11 @@
-
-import {  useState } from 'react';
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AccordionSummary, Accordion, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Typography } from "@mui/material";
 import { locations } from '../data/LocationData';
 import { Props } from '../type';
 
-
-
 export default function AccordionTbl2(
-  {expandedTbl1, setExpandedTbl1, expandedArea, setExpandedArea, expandedInput, setExpandedInput, expandedTbl2, setExpandedTbl2}: Props)  {
+  {expandedTbl1, expandedArea, expandedInput, expandedTbl2, setExpandedTbl2}: Props)  {
 
     const calculateHeight = () => {
       if (expandedTbl2 && !expandedArea && !expandedInput && !expandedTbl1) {
@@ -42,39 +38,38 @@ export default function AccordionTbl2(
 
   return (
     <Accordion
-    sx={{backgroundColor:'#512da8'}}
+      sx={{backgroundColor:'#512da8'}}
       expanded={expandedTbl2} onChange={handleExpand}
     >
       <AccordionSummary
-
+        expandIcon={<ExpandMoreIcon />}
       >
         <Typography color='white' fontWeight={'bold'}>Distances</Typography>
-
       </AccordionSummary>
-      <AccordionDetails>
-    <TableContainer   sx={{height, overflowY: 'scroll'}}>
-      <Table stickyHeader >
-        <TableHead >
-          <TableRow >
-            <TableCell>ID</TableCell>
-            <TableCell>Latitude</TableCell>
-            <TableCell>Longitude</TableCell>
-            <TableCell>Altitude</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody >
-          {locations.map((location) => (
-            <TableRow key={location.id}>
-              <TableCell>{location.id}</TableCell>
-              <TableCell>{location.latitude}</TableCell>
-              <TableCell>{location.longitude}</TableCell>
-              <TableCell>{location.altitude}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-</AccordionDetails>
+        <AccordionDetails>
+          <TableContainer   sx={{height, overflowY: 'scroll'}}>
+            <Table stickyHeader >
+              <TableHead >
+                <TableRow >
+                  <TableCell>ID</TableCell>
+                  <TableCell>Latitude</TableCell>
+                  <TableCell>Longitude</TableCell>
+                  <TableCell>Altitude</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody >
+                {locations.map((location) => (
+                  <TableRow key={location.id}>
+                    <TableCell>{location.id}</TableCell>
+                    <TableCell>{location.latitude}</TableCell>
+                    <TableCell>{location.longitude}</TableCell>
+                    <TableCell>{location.altitude}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </AccordionDetails>
     </Accordion>
     
   );
